@@ -12,5 +12,6 @@ module.exports = {
       const mentionResponseBlock = { ...suggestion_message(correction), ...props}
       const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)
     })
+    return corrections
   }
 }
