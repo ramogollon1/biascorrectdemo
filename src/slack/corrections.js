@@ -8,12 +8,12 @@ module.exports = {
     const {text, user, channel} = event
     const props = {text, user, channel}
     const corrections = biascorrect.BIAS_CORRECTION(text)
-    console.log('corrections', corrections);
     const _correction = randomValue(corrections);
     if (!_correction.length || !corrections.length) return
     _correction.map( async correction => {
+      correction.TEXT = text
       const mentionResponseBlock = { ...suggestion_message(correction), ...props}
-      const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)
+      await webClient.chat.postEphemeral(mentionResponseBlock)
     })
     return _correction
   }
