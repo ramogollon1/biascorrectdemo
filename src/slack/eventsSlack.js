@@ -1,6 +1,6 @@
 const {removeResponseEphemeral} = require('./responseEphemerals')
 const {corrections} = require('./corrections')
-const {searchBot, updateMessage, postEphemeral} = require('./slackAPI')
+const {updateMessage, postEphemeral} = require('./slackAPI')
 const {learn_more} = require('./helpText')
 
 let eventGlobal
