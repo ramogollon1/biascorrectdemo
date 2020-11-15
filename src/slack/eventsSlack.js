@@ -1,6 +1,7 @@
-const {updateResponseEphemeral, removeResponseEphemeral} = require('./responseEphemerals')
+const {removeResponseEphemeral} = require('./responseEphemerals')
 const {corrections} = require('./corrections')
-const {updateMessage} = require('./slackAPI')
+const {searchBot, updateMessage, postEphemeral} = require('./slackAPI')
+const {learn_more} = require('./helpText')
 
 let eventGlobal
 module.exports = {
@@ -8,26 +9,27 @@ module.exports = {
     if (event.bot_id) return
     try {
       eventGlobal = event
-      console.log('event', event)
-      corrections(event, webClient)
+      const responseCorrection = corrections(event, webClient)
+      eventGlobal.corrections = responseCorrection
     } catch (e) {
       console.log(JSON.stringify(e))
     }
   }),
-  actions: (callbackId, slackInteractions) => slackInteractions.action(callbackId, async (payload, respond) => {
+  actions: (callbackId, webClient, slackInteractions) => slackInteractions.action(callbackId, (payload, respond) => {
     try {
-      const {response_url, token, channel, action_ts} = payload
+      const {channel} = payload
+      const {user, channel: channelUser} = eventGlobal
       const valueButton = payload.actions[0].value
       switch (valueButton) {
         case 'correct_button':
-          updateMessage(process.env.SLACK_OAUTH_ACCESS_TOKEN, channel.id, eventGlobal, 'hola')
+          updateMessage(process.env.SLACK_OAUTH_ACCESS_TOKEN, channel.id, eventGlobal)
           removeResponseEphemeral(respond)
         break;
         case 'ignore_button':
           removeResponseEphemeral(respond)
         break;
         case 'learn_more_button':
-          updateResponseEphemeral(respond)
+          postEphemeral(webClient, user, channelUser, learn_more)
         break;
         default:
           return

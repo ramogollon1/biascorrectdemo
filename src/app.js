@@ -22,9 +22,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 events('message', webClient, slackEvents)
-actions('corrector', slackInteractions)
+actions('corrector', webClient, slackInteractions)
 
-// Starts server
 app.listen(port, function() {
   console.log('Bot is listening on port ' + port)
 })
