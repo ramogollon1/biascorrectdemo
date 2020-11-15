@@ -1,5 +1,6 @@
 const biascorrect = require('../../lib/biascorrect/biascorrect')
 const biascorrect_views = require('../../lib/biascorrect/views/suggestion_message')
+const { randomValue } = require('./services')
 const suggestion_message = biascorrect_views.suggestion_message
 
 module.exports = {
@@ -7,11 +8,13 @@ module.exports = {
     const {text, user, channel} = event
     const props = {text, user, channel}
     const corrections = biascorrect.BIAS_CORRECTION(text)
-    if (!corrections.length) return
-    corrections.map( async correction => {
+    console.log('corrections', corrections);
+    const _correction = randomValue(corrections);
+    if (!_correction.length || !corrections.length) return
+    _correction.map( async correction => {
       const mentionResponseBlock = { ...suggestion_message(correction), ...props}
       const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)
     })
-    return corrections
+    return _correction
   }
 }

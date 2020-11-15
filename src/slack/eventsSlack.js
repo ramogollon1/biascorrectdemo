@@ -1,6 +1,7 @@
 const {updateResponseEphemeral, removeResponseEphemeral} = require('./responseEphemerals')
 const {corrections} = require('./corrections')
 const {updateMessage} = require('./slackAPI')
+const { randomValue } = require('./services');
 
 let eventGlobal
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
       eventGlobal = event
       // console.log('event', event)
       const responseCorrection = corrections(event, webClient)
+      console.log('responseCorrection', responseCorrection);
       eventGlobal.corrections = responseCorrection
     } catch (e) {
       console.log(JSON.stringify(e))
