@@ -1,6 +1,6 @@
 const biascorrect = require('../../lib/biascorrect/biascorrect')
 const biascorrect_views = require('../../lib/biascorrect/views/suggestion_message')
-const {randomValue, randomValue2 } = require('./services')
+const {randomValue } = require('./services')
 const suggestion_message = biascorrect_views.suggestion_message
 
 module.exports = {
@@ -8,20 +8,22 @@ module.exports = {
     const {text, user, channel} = event
     const props = {text, user, channel}
     const corrections = biascorrect.BIAS_CORRECTION(text)
-    // console.log('corrections', corrections);
+    let correctionsArray = []
     corrections.forEach((elem, i) => {
-      corrections[i] = randomValue2(corrections[i], text)
+      corrections[i] = randomValue(corrections[i])
+      correctionsArray.push(corrections[i][0])
     })
-    // console.log('corrections', corrections)
-    const _correction = randomValue(corrections[0]);
-    // console.log('_correction', _correction)
-    if (!_correction.length || !corrections.length) return
-    _correction.map( async correction => {
-      // correction.TEXT = text
-      const mentionResponseBlock = { ...suggestion_message(correction), ...props}
-      const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)
+    if (!correctionsArray.length || !corrections.length) return
+    let newText = text
+    let sizeCorrection = (correctionsArray.length - 1)
+    correctionsArray.map( async (correction, index) => {
+      correction.TEXT = newText.replace(correction.BAD_WORD, correction.REPLACEMENT)
+      newText = correction.TEXT
+      if (sizeCorrection === index) {
+        const mentionResponseBlock = { ...suggestion_message(correction), ...props}
+        const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)
+      }
     })
-    
-    return _correction
+    return correctionsArray
   }
 }
