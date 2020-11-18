@@ -6,8 +6,10 @@ module.exports = {
     const url = 'https://slack.com/api/chat.update';
     let newText = textOld, message
     corrections.forEach((val) => {
-      message = newText.replace(val.BAD_WORD, val.REPLACEMENT)
-      newText = message
+      if(val && val.BAD_WORD){
+        message = newText.replace(val.BAD_WORD, val.REPLACEMENT)
+        newText = message
+      }
     })
     const res = await axios.post(url, {
       channel,

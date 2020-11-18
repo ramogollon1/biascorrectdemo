@@ -1,9 +1,10 @@
-Pronoun	Trigger Words or Phrase	Suggestion
+Pronoun	Trigger Words or Phrase	Suggestion 
 None	Master Bedroom	Primary Bedroom
 None	Blacklist	Blocklist
 None	Whitelist	Allowlist
 None	Paddy wagon	Police vehicle
-He	Bugger	Fellow or Chap
+He	Bugger	Chap
+He	Bugger	Chap
 None	Bugger up	Mess up
 He	Hooligan	Troublemaker
 She	Emotional	Passionate
@@ -15,23 +16,33 @@ She	Feisty	Determined
 He	Thug	Troublemaker
 They	Uppity	Arrogant
 They	So Articulate 	This phrase could be condescending please consider using another phrase.
-They	Ghetto (adj.)	This term could be offensive term please consider using another word.
-They	Rachet (adj)	This term could be offensive term please consider using another word.
+They	Ghetto 	This term could be offensive, please consider using another word.
+They	Rachet	This term could be offensive, please consider using another word.
 They	Peanut Gallery	Hecklers
 They	The Itis 	Food Coma  
-They	Gyp/Jipped	Ripped off, shortchanged, cheated
+They	Gyp	Ripped off
+They	Gyp	shortchanged
+They	Gyp	cheated
+They	Jipped	Ripped off
+They	Jipped	shortchanged
+They	Jipped	cheated
 They	Guru 	Expert
-They	Ninja	Expert, whiz
+They	Ninja	Expert
+They	Ninja	whiz
 They	Tipping Point 	Limit
 They	Spirit Animal	Kindred Spirit 
 They	Off the Reservation	Went Rogue
 They	Sold Down the River	Betrayed
-They	Granfathered In	Exempted, Excused, Legacied in
+They	Granfathered In	Exempted
+They	Granfathered In	Excused
+They	Granfathered In	Legacied in
 They	Moron	Fool
 They	Retarded	Silly
 They	Savage	Badass
-They	Illegal Immigrant	undocumented, without papers
-They	Illegal Alien	undocumented, without papers
+They	Illegal Immigrant	undocumented
+They	Illegal Immigrant	without papers
+They	Illegal Alien	undocumented
+They	Illegal Alien	without papers
 They	Tranny	Transgender
 None	Whip 'em into shape	Shape up
 None	Slaving away	Working really hard
@@ -58,7 +69,6 @@ She	mothers	leads
 She	emotional	passionate
 She	judgmental	great at giving feedback
 She	pushy	persuasive
-She	judgemental	great at giving feedback
 She	selfish	dedicated
 She	vain	neat
 She	showoff	smooth
@@ -78,6 +88,21 @@ She	chatty	articulate
 She	quiet	thoughtful
 none	you guys	y'all
 none	you guys	you all
-She	cold	Coldest
-Him	cold	focused
-He	cold	focuse
+You	crazy	Nasty
+Him	crazy	nasty
+her	crazy	nasty
+We	tranny	Transgender
+Ninguno	es de negros	No decir
+Ella	mujer tenia que ser 	No decir
+El	boludo 	No decir
+Todos	invalido 	capacidades diferentes
+Todos	emocional	apasionada
+Ella	fria	enfocada
+Ella	autoritaria	influyente
+Ella	hostil	firme
+Ella	manipuladora	persuasiva
+Ella	teatrera	apasionada
+Ella	terca	tenaz
+Ella	calculadora	estrategica
+Ella	retraida	reflexiva
+Ella	fastidiosa	tenaz
