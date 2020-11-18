@@ -17,8 +17,10 @@ module.exports = {
     let newText = text
     let sizeCorrection = (correctionsArray.length - 1)
     correctionsArray.map( async (correction, index) => {
-      correction.TEXT = newText.replace(correction.BAD_WORD, correction.REPLACEMENT)
-      newText = correction.TEXT
+      if(correction && correction.BAD_WORD){
+        correction.TEXT = newText.toLowerCase().replace(correction.BAD_WORD, correction.REPLACEMENT)
+        newText = correction.TEXT
+      }
       if (sizeCorrection === index) {
         const mentionResponseBlock = { ...suggestion_message(correction), ...props}
         const postEphemeral = await webClient.chat.postEphemeral(mentionResponseBlock)

@@ -11,6 +11,7 @@ module.exports = {
       eventGlobal = event
       const responseCorrection = corrections(event, webClient)
       eventGlobal.corrections = responseCorrection
+      console.log('corrections', responseCorrection)
     } catch (e) {
       console.log(JSON.stringify(e))
     }
