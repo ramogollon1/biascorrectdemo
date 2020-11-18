@@ -18,7 +18,7 @@ module.exports = {
     let sizeCorrection = (correctionsArray.length - 1)
     correctionsArray.map( async (correction, index) => {
       if(correction && correction.BAD_WORD){
-        correction.TEXT = newText.replace(correction.BAD_WORD, correction.REPLACEMENT)
+        correction.TEXT = newText.toLowerCase().replace(correction.BAD_WORD, correction.REPLACEMENT)
         newText = correction.TEXT
       }
       if (sizeCorrection === index) {

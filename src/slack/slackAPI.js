@@ -7,7 +7,7 @@ module.exports = {
     let newText = textOld, message
     corrections.forEach((val) => {
       if(val && val.BAD_WORD){
-        message = newText.replace(val.BAD_WORD, val.REPLACEMENT)
+        message = newText.toLowerCase().replace(val.BAD_WORD, val.REPLACEMENT)
         newText = message
       }
     })
