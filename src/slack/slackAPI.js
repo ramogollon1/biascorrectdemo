@@ -1,17 +1,35 @@
-const axios = require('axios');
+const axios = require("axios");
 
 module.exports = {
   updateMessage: async (token, channel, event) => {
-    const {corrections, ts, text: textOld} = event
-    const url = 'https://slack.com/api/chat.update';
-    const message = textOld.replace(corrections[0].BAD_WORD, corrections[0].REPLACEMENT)
-    const res = await axios.post(url, {
-      channel,
-      ts,
-      as_user: true,
-      text: message
-    }, { headers: { authorization: `Bearer ${token}` } })
+    const { corrections, ts, text: textOld } = event;
+    const url = "https://slack.com/api/chat.update";
+    const correctionsResponse = await corrections;
+    const message = textOld.replace(
+      correctionsResponse[0].BAD_WORD,
+      correctionsResponse[0].REPLACEMENT
+    );
+    await axios
+      .post(
+        url,
+        {
+          channel,
+          ts,
+          as_user: true,
+          text: message,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // console.log("response", response.data);
+      });
   },
-  postEphemeral: (webClient, user, channel, text) => webClient.chat.postEphemeral({user, channel: channel, text}),
-  postMessage: (webClient, user, channel, text) => webClient.chat.postMessage({user, channel: channel, text})
-}
+  postEphemeral: async (webClient, user, channel, text) =>
+    await webClient.chat.postEphemeral({ user, channel, text }),
+  postMessage: (webClient, user, channel, text) =>
+    webClient.chat.postMessage({ user, channel, text }),
+};
