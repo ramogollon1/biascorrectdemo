@@ -10,7 +10,10 @@ const qs = require("querystring");
 
 var redis = require("redis");
 
-var client = redis.createClient();
+var client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: 6379,
+});
 client.on("connect", function () {
   console.log("Conectado a Redis Server");
 });
