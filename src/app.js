@@ -7,20 +7,7 @@ require("dotenv").config();
 const { events, actions } = require("./slack/eventsSlack");
 const axios = require("axios");
 const qs = require("querystring");
-
-var redis = require("redis");
-
-var client = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: 6379,
-});
-client.on("connect", function () {
-  console.log("Conectado a Redis Server");
-});
-
-client.on("error", function (err) {
-  console.log("Error " + err);
-});
+const { CLIENT_REDIS } = require("./slack/redis");
 
 let AUTH_TOKEN;
 
@@ -37,7 +24,7 @@ const slackInteractions = createMessageAdapter(
 app.use("/slack/events", slackEvents.expressMiddleware());
 app.use("/slack/actions", slackInteractions.expressMiddleware());
 
-// client.lrange("tokenArray2", 0, -1, function (err, token) {
+// CLIENT_REDIS.lrange("tokenArray2", 0, -1, function (err, token) {
 //   console.log("token", token);
 // });
 
@@ -63,14 +50,17 @@ app.use("/slack/auth", (req, res, next) => {
         authed_user: { id, access_token },
       } = response.data;
 
-      client.lrange("tokenArray2", 0, -1, function (err, token) {
+      CLIENT_REDIS.lrange("tokenArray2", 0, -1, function (err, token) {
         const findToken = token.find((elem) => {
           const element = JSON.parse(elem);
           AUTH_TOKEN = element;
           return element.id === id;
         });
         if (!findToken) {
-          client.lpush("tokenArray2", JSON.stringify({ id, access_token }));
+          CLIENT_REDIS.lpush(
+            "tokenArray2",
+            JSON.stringify({ id, access_token })
+          );
         }
       });
 
@@ -89,4 +79,12 @@ actions("corrector", webClient, slackInteractions);
 
 app.listen(port, () => {
   console.log("Bot is listening on port " + port);
+});
+
+CLIENT_REDIS.on("connect", function () {
+  console.log("Conectado a Redis Server");
+});
+
+CLIENT_REDIS.on("error", function (err) {
+  console.log("Error " + err);
 });
