@@ -18,6 +18,10 @@ client.on("connect", function () {
   console.log("Conectado a Redis Server");
 });
 
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
+
 let AUTH_TOKEN;
 
 const app = express();
