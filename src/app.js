@@ -63,8 +63,8 @@ app.use("/slack/auth", (req, res, next) => {
           );
         }
       });
-
-      res.status(200).send(`<pre>${JSON.stringify(response.data)}</pre>`);
+      window.close();
+      // res.status(200).send(`<pre>${JSON.stringify(response.data)}</pre>`);
     })
     .catch((error) => {
       res.status(400).send(JSON.stringify(error));
