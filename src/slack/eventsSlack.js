@@ -2,9 +2,7 @@ const { removeResponseEphemeral } = require("./responseEphemerals");
 const { corrections } = require("./corrections");
 const { updateMessage, postEphemeral } = require("./slackAPI");
 const { learn_more, authorizeEphemoral } = require("./helpText");
-
-var redis = require("redis");
-var client = redis.createClient();
+const { CLIENT_REDIS } = require("./redis");
 
 let eventGlobal;
 let APP_AUTHORIZE = false;
@@ -17,7 +15,7 @@ module.exports = {
         const responseCorrection = corrections(event, webClient);
         eventGlobal.corrections = responseCorrection;
         if (eventGlobal.text.includes("U01EZKN7DQ8")) {
-          client.get("tokens", function (err, reply) {
+          CLIENT_REDIS.get("tokens", function (err, reply) {
             TOKENS = reply;
           });
           APP_AUTHORIZE = true;
@@ -39,7 +37,7 @@ module.exports = {
         const valueButton = payload.actions[0].value;
         switch (valueButton) {
           case "correct_button":
-            client.lrange("tokenArray2", 0, -1, function (err, token) {
+            CLIENT_REDIS.lrange("tokenArray2", 0, -1, function (err, token) {
               const findToken = token.find((elem) => {
                 const element = JSON.parse(elem);
                 AUTH_TOKEN = element;
