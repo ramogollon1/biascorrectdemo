@@ -1,13 +1,31 @@
 module.exports = {
-  updateResponseEphemeral: respond => respond({
-    'response_type': 'ephemeral',
-    'text': `The biases intrinsic in our language often lead us to stereotype and exclude. For instance, women and men with the same talents and skills are often described in very different ways due to unconscious bias, creating an invisible barrier to gender equality. Think about the words you use and how you might ensure they are more inclusive, which benefits everyone.`,
-    'replace_original': true
-  }),
-  removeResponseEphemeral: respond => respond({
-    'response_type': 'ephemeral',
-    'text': '',
-    'replace_original': true,
-    'delete_original': true
-  })
-}
+  updateResponseEphemeral: async (payload) => {
+    try {
+      console.log("updateResponseEphemeral");
+      const {
+        channel: { id: channelId },
+        user: { id: userId },
+      } = payload;
+      console.log("channelId", channelId);
+      console.log("userId", userId);
+      // Call the chat.postEphemeral method using the WebClient
+      const result = await client.chat.postEphemeral({
+        channel: channelId,
+        user: userId,
+        text: "Shhhh only you can see this :shushing_face:",
+      });
+
+      console.log(result);
+    } catch (error) {
+      console.error("Error in updateResponseEphemeral =>", error);
+    }
+  },
+
+  removeResponseEphemeral: async (respond) =>
+    respond({
+      response_type: "ephemeral",
+      text: "",
+      replace_original: true,
+      delete_original: true,
+    }),
+};

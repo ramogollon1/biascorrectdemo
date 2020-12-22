@@ -11,7 +11,9 @@ module.exports = {
     const _correction = randomValue(corrections);
     if (!_correction.length) return;
     const correctionMessage = await _correction.map((correction) => {
-      correction.TEXT = text;
+      if (correction) {
+        correction.TEXT = text;
+      }
       const mentionResponseBlock = {
         ...suggestion_message(correction),
         ...props,

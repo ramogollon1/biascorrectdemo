@@ -1,6 +1,16 @@
 const axios = require("axios");
 
 module.exports = {
+  getListUsers: async (webClient) => {
+    try {
+      const fetchUsers = await webClient.users.list();
+      return fetchUsers.members.filter(
+        (user) => user.real_name == process.env.SLACK_NAME_APP
+      );
+    } catch (error) {
+      console.error("getListUsers => " + error);
+    }
+  },
   updateMessage: async (token, channel, event) => {
     const { corrections, ts, text: textOld } = event;
     const url = "https://slack.com/api/chat.update";
@@ -25,7 +35,7 @@ module.exports = {
         }
       )
       .then((response) => {
-        // console.log("response", response.data);
+        console.log("response", response.data);
       });
   },
   postEphemeral: async (webClient, user, channel, text) =>
